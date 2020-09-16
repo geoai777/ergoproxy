@@ -151,9 +151,9 @@ function main()
 end
 
 repeat
-    local ok, err = coroutine.resume(coroutine.create(main)) -- запускаем main
+    local ok, err = coroutine.resume(coroutine.create(main))                             -- start main routine
         if not ok then
                 if dbgEn == 1 then print(err) end
         end
-    socket.sleep(1)             			-- 1 second delay
+    socket.sleep(1)             			                                 -- 1 second delay
 until false
