@@ -36,9 +36,9 @@ end
 -- parse packet for domain name
 function read_domain(packet)
         local pos = 14
-        local dlen = packet:byte(13)		-- check prefix size
+        local dlen = packet:byte(13)		                                        -- check prefix size
         local domain = {}
-        while (dlen > 0) do					-- with dlen = 0 domain name ends
+        while (dlen > 0) do					                        -- with dlen = 0 domain name ends
 											-- read part of domain name
                 table.insert(domain, packet:sub(pos, pos + dlen - 1))
                 pos = pos + dlen + 1
@@ -50,7 +50,7 @@ end
 -- UDP to TCP encoding
 function udp_to_tcp_coroutine_function(udp_in, tcp_out, clients)
     repeat
-        coroutine.yield()       			-- return control to main routine
+        coroutine.yield()       			                                -- return control to main routine
 											-- get UDP packet
         packet, err_ip, port = udp_in:receivefrom()
         if packet then
@@ -75,7 +75,7 @@ end
 -- TCP to UDP packet relay
 function tcp_to_udp_coroutine_function(tcp_in, udp_out, clients)
     repeat
-        coroutine.yield()       			-- return control to main routine
+        coroutine.yield()       			                                -- return control to main routine
 											-- > - big endian
 											-- I - unsigned integer
 											-- 2 - 2 bytes size
