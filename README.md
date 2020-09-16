@@ -4,7 +4,7 @@ I do not take [credit for lua script](https://github.com/ivan386/lua-simple-udp-
 
 **Please be advise**, I use three proxy workers, each on other port. If you desire to do so, you should edit port name in LUA script and save files with according names. The same applies to Stunnel config. If you intend to use less workers you should edit it accordingly. 
 
-1. Install stunnel and copy `stu.conf` (edit if needed) to `/etc/stunnel/`
+1. Install stunnel and copy [stu.conf](https://github.com/p0rc0jet/ergoproxy/blob/master/stu.conf) (edit if needed) to `/etc/stunnel/`
 ```
 apt install stunnel4
 ```
@@ -16,9 +16,9 @@ openssl x509 -inform DER -in Root-R2.crt -out Root-R2.pem -text
 systemctl restart stunnel4.service
 ```
 
-3. Put `ergoproxy.lua` as `ergoproxy-1053` - `ergoproxy-1055` in `/srv/udptotcp`, remember to edit ports according to your needs
+3. Put [ergoproxy.lua](https://github.com/p0rc0jet/ergoproxy/blob/master/ergoproxy.lua) as `ergoproxy-1053` - `ergoproxy-1055` in `/srv/udptotcp`, remember to edit ports according to your needs
 
-4. Put `ergoProxy.sh` to `/srv/dnstls` and add following to `/etc/rc/local/` before `exit 0` string. 
+4. Put [ergoProxy.sh](https://github.com/p0rc0jet/ergoproxy/blob/master/ergoProxy.sh) to `/srv/dnstls` and add following to `/etc/rc/local/` before `exit 0` string. 
 And, yes whole thing could be done in more elegant way. I guess some time later it will.
 ```
 /srv/dnstls/ergoProxy.sh start
