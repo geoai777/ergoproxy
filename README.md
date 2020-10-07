@@ -16,8 +16,8 @@ openssl x509 -inform DER -in Root-R2.crt -out Root-R2.pem -text
 systemctl restart stunnel4.service
 ```
 
-3. Now, here are two possibilities:
-3.1. Use lua file as is. AFAIK it has no performance impact. copy [`eproxy.lua`](https://github.com/p0rc0jet/ergoproxy/blob/master/eproxy.lua) to `worker-ep1053`...`worker-ep1055`, remember to edit ports according to your needs.
+3. Now, here are two possibilities:<br>
+3.1. Use lua file as is. AFAIK it has no performance impact. copy [`eproxy.lua`](https://github.com/p0rc0jet/ergoproxy/blob/master/eproxy.lua) to `worker-ep1053`...`worker-ep1055`, remember to edit ports according to your needs.<br>
 3.2. Remember to edit ports according to your needs. Compile lua chunk with `luac eproxy.lua -o worker-ep1053`
 
 4. Put [ctrl-eproxy.sh](https://github.com/p0rc0jet/ergoproxy/blob/master/ctrl-eproxy.sh) to `/srv/dnstls`. Remember to check there is correct lua (lua5.2, lua5.3, etc.) interpreter version in file. 
