@@ -8,6 +8,15 @@ I do not take [credit for lua script](https://github.com/ivan386/lua-simple-udp-
 ```
 apt install stunnel4
 ```
+**VERY** IMPORTANT NOTICE: At some point, stunnel can get stubborn about `verifyPeer = yes` option. Here what should be done:<br>
+1.1. After `setuid` add `verifyPeer = yes`<br>
+1.2. Use this command to aquire pem certificate from secure dns provider</br>
+```
+openssl s_client -servername $1 -connect $1:853</dev/null 2>/dev/null | openssl x509 -text
+```
+* - spent whole day trying to find solution for this `CERT: Certificate not found in local repository` error.<br>
+1.3. Copy tail of output starting with `-----BEGIN CERTIFICATE-----` ending with `-----END CERTIFICATE-----` to file, for example `dns.google.pem`.<br>
+1.4. Add file to `stu.conf` at appropriate serivce.<br>
 
 2. Download root certificates to `/srv/dnstls`, convert to pem and run stunnel
 ```
