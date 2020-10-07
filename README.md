@@ -14,7 +14,8 @@ apt install stunnel4
 ```
 openssl s_client -servername $1 -connect $1:853</dev/null 2>/dev/null | openssl x509 -text
 ```
-* - spent whole day trying to find solution for this `CERT: Certificate not found in local repository` error.<br>
+I spent whole day trying to find solution for this `CERT: Certificate not found in local repository` error.
+
 1.3. Copy tail of output starting with `-----BEGIN CERTIFICATE-----` ending with `-----END CERTIFICATE-----` to file, for example `dns.google.pem`.<br>
 1.4. Add file to `stu.conf` at appropriate service.<br>
 
