@@ -1,9 +1,10 @@
 #!/bin/bash
 
+# Remember to put correct version of lua interpreter here
 luaRT="/usr/bin/lua5.3"
 dPath="/srv/dnstls"
 
-workers=(ergoproxy-1053 ergoproxy-1054 ergoproxy-1055)
+workers=(worker-ep1053 worker-ep1054 worker-ep1055)
 
 if [[ $1 == "start" ]]; then
         for worker in "${workers[@]}"; do
