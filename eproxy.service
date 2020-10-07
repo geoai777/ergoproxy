@@ -1,0 +1,12 @@
+[Unit]
+Description=eЯgo pЯoxy
+After=syslog.target network.target
+
+[Service]
+Type=forking
+WorkingDirectory=/srv/dnstls/
+ExecStart=/bin/bash ctrl-eproxy.sh start
+ExecStop=/bin/bash ctrl-eproxy.sh stop
+
+[Install]
+WantedBy=multi-user.target
