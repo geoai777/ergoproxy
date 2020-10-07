@@ -1,4 +1,4 @@
-# ErgoProxy
+# eЯgo pЯoxy
 Simple DNS UDP to TCP proxy script. 
 I do not take [credit for lua script](https://github.com/ivan386/lua-simple-udp-to-tcp-dns-proxy), I just describe how I use it. 
 
