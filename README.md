@@ -16,12 +16,15 @@ openssl x509 -inform DER -in Root-R2.crt -out Root-R2.pem -text
 systemctl restart stunnel4.service
 ```
 
-3. Put [ergoproxy.lua](https://github.com/p0rc0jet/ergoproxy/blob/master/ergoproxy.lua) as `ergoproxy-1053` - `ergoproxy-1055` in `/srv/udptotcp`, remember to edit ports according to your needs
+3. Now, here are two possibilities:
+3.1. Use lua file as is. AFAIK it has no performance impact. copy [`eproxy.lua`](https://github.com/p0rc0jet/ergoproxy/blob/master/eproxy.lua) to `worker-ep1053`...`worker-ep1055`, remember to edit ports according to your needs.
+3.2. Remember to edit ports according to your needs. Compile lua chunk with `luac eproxy.lua -o worker-ep1053`
 
-4. Put [ergoProxy.sh](https://github.com/p0rc0jet/ergoproxy/blob/master/ergoProxy.sh) to `/srv/dnstls` and add following to `/etc/rc/local/` before `exit 0` string. 
-And, yes whole thing could be done in more elegant way. I guess some time later it will.
+4. Put [ctrl-eproxy.sh](https://github.com/p0rc0jet/ergoproxy/blob/master/ctrl-eproxy.sh) to `/srv/dnstls`. Remember to check there is correct lua (lua5.2, lua5.3, etc.) interpreter version in file. 
+
+4.1. Finally put [eproxy.service](https://github.com/p0rc0jet/ergoproxy/blob/master/eproxy.service) to `/etc/systemd/system/`.
 ```
-/srv/dnstls/ergoProxy.sh start
+systemctl enable eproxy.service
 ```
 
 5. Add following to `/etc/bind/named.conf.options`:
@@ -33,9 +36,9 @@ And, yes whole thing could be done in more elegant way. I guess some time later 
   }
 ```
 
-6. Start srcirpt. (Kinda funny, but...)
+6. Start service.
 ```
-/srv/dnstls/ergoProxy.sh start
+systemctl start eproxy.service
 ```
 
 7. Restart DNS server (bind)
