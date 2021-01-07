@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# Remember to put correct version of lua interpreter here
-luaRT="/usr/bin/lua5.3"
-dPath="/srv/dnstls"
+interpreter="/usr/bin/python3"
+dPath="/srv/ergoproxy"
 
 workers=(worker-ep1053 worker-ep1054 worker-ep1055)
 
 if [[ $1 == "start" ]]; then
         for worker in "${workers[@]}"; do
-                $luaRT $dPath/$worker &
+                $interpreter $dPath/$worker &
         done
 fi
 
