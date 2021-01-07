@@ -1,7 +1,7 @@
 #!/bin/bash
 
 interpreter="/usr/bin/python3"
-dPath="/srv/ergoproxy"
+dPath="/srv/dnstls"
 
 workers=(worker-ep1053 worker-ep1054 worker-ep1055)
 
