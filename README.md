@@ -1,38 +1,25 @@
 # eЯgo pЯoxy
 Simple DNS UDP to TCP proxy script. 
-I do not take [credit for lua script](https://github.com/ivan386/lua-simple-udp-to-tcp-dns-proxy), I just describe how I use it. 
+Workder script is based on this [this](https://gist.github.com/korc/68f3a9c00f92062346603265bdca721c) code. I slightly modified it for variable setup convenience.
 
-**Please be advise**, I use three proxy workers, each on other port. If you desire to do so, you should edit port name in LUA script and save files with according names. The same applies to Stunnel config. If you intend to use less workers you should edit it accordingly. 
+**Please be advise**, I use three proxy workers, each on other port. If you desire to do so, you should edit port name in worker script and save files with according names. The same applies to Stunnel config. If you intend to use less workers you should edit it accordingly. 
+zer0. You can simply
+```
+dpkg -i ergoproxy-2.0.deb
+```
+instead of p.2,3,4 and 6.
 
 1. Install stunnel and copy [stu.conf](https://github.com/p0rc0jet/ergoproxy/blob/master/stu.conf) (edit if needed) to `/etc/stunnel/`
 ```
 apt install stunnel4
 ```
-**VERY** IMPORTANT NOTICE: At some point, stunnel can get stubborn about `verifyPeer = yes` option. Here what should be done:<br>
-1.1. After `setuid` add `verifyPeer = yes`<br>
-1.2. Use this command to acquire pem certificate from secure dns provider</br>
-```
-openssl s_client -servername $1 -connect $1:853</dev/null 2>/dev/null | openssl x509 -text
-```
-I spent whole day trying to find solution for this `CERT: Certificate not found in local repository` error.
 
-1.3. Copy tail of output starting with `-----BEGIN CERTIFICATE-----` ending with `-----END CERTIFICATE-----` to file, for example `dns.google.pem`.<br>
-1.4. Add file to `stu.conf` at appropriate service.<br>
+2. Now, copy [`worker-ep1053`](https://raw.githubusercontent.com/p0rc0jet/ergoproxy/master/worker-ep1053) to `worker-ep1054`...`worker-ep1055`, remember to edit **ports** according to your needs.<br>
 
-2. Download root certificates to `/srv/dnstls`, convert to pem and run stunnel
-```
-wget https://secure.globalsign.net/cacert/Root-R2.crt -P /srv/dnstls
-openssl x509 -inform DER -in Root-R2.crt -out Root-R2.pem -text
-systemctl restart stunnel4.service
-```
 
-3. Now, here are two possibilities:<br>
-3.1. Use lua file as is. AFAIK it has no performance impact. copy [`eproxy.lua`](https://github.com/p0rc0jet/ergoproxy/blob/master/eproxy.lua) to `worker-ep1053`...`worker-ep1055`, remember to edit ports according to your needs.<br>
-3.2. Remember to edit ports according to your needs. Compile lua chunk with `luac eproxy.lua -o worker-ep1053`
+3. Put [ctrl-eproxy.sh](https://github.com/p0rc0jet/ergoproxy/blob/master/ctrl-eproxy.sh) to `/srv/dnstls`.
 
-4. Put [ctrl-eproxy.sh](https://github.com/p0rc0jet/ergoproxy/blob/master/ctrl-eproxy.sh) to `/srv/dnstls`. Remember to check there is correct lua (lua5.2, lua5.3, etc.) interpreter version in file. 
-
-4.1. Finally put [eproxy.service](https://github.com/p0rc0jet/ergoproxy/blob/master/eproxy.service) to `/etc/systemd/system/`.
+4. Finally put [eproxy.service](https://github.com/p0rc0jet/ergoproxy/blob/master/eproxy.service) to `/etc/systemd/system/`.
 ```
 systemctl enable eproxy.service
 ```
@@ -55,11 +42,22 @@ systemctl start eproxy.service
 ```
 systemctl restart bind9.service
 ```
+7.1. Run script to test your eproxy + stunnel is working
+```
+eproxy_test.sh
+```
+will give you something like:
+```
+00000000: cfc9 8180 0001 0001 0000 0000 0a64 7563  .............duc
+00000010: 6b64 7563 6b67 6f03 636f 6d00 0001 0001  kduckgo.com.....
+00000020: c00c 0001 0001 0000 007e 0004 2872 b19c  .........~..(r..
+```
+this means everything works well.
 
 8. (Optional) Restrict all DNS FORWARDING on your firewall so clients use only secure DNS server.
 
 I hope it helps.
 
 # Links
-- https://github.com/ivan386/lua-simple-udp-to-tcp-dns-proxy - lua script author
-- https://habr.com/ru/post/427957/ - article on how to create TCP to UDP proxy
+- https://gist.github.com/korc/68f3a9c00f92062346603265bdca721c - udp2tcp script source
+- https://github.com/ivan386/lua-simple-udp-to-tcp-dns-proxy - lua script author (old worker)
