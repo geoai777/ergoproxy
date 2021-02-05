@@ -3,6 +3,7 @@ Simple DNS UDP to TCP proxy script.
 Workder script is based on this [this](https://gist.github.com/korc/68f3a9c00f92062346603265bdca721c) code. I slightly modified it for variable setup convenience.
 
 **Please be advise**, I use three proxy workers, each on other port. If you desire to do so, you should edit port name in worker script and save files with according names. The same applies to Stunnel config. If you intend to use less workers you should edit it accordingly. 
+
 zer0. You can simply
 ```
 dpkg -i ergoproxy-2.0.deb
